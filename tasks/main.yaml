@@ -24,10 +24,9 @@
    description: "{{ vyos_interface_description }}"
   when: (vyos_cmd is defined) and (vyos_cmd == "interface") and (vyos_interface is defined)
 
-- include_tasks: init.yml
-  when: 
-    - vyos_cmd is defined
-    - vyos_cmd == "init"
+- name: "running initilization script"
+  include_tasks: init.yaml
+  when: (vyos_cmd is defined) and (vyos_cmd == "init")
 
 - name: "backup config from vyos host {{ inventory_hostname }}"  
   vyos_config:
