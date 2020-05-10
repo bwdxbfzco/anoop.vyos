@@ -5,7 +5,7 @@
   vyos_config:
     lines:
       - set vpn ipsec auto-update 40
-      - set vpn ipsec esp-group fazaaDC2esp compression 'disable'
+      - set vpn ipsec esp-group ipsecesp compression 'disable'
       - set vpn ipsec esp-group ipsecesp compression 'disable'
       - set vpn ipsec esp-group ipsecesp lifetime '3600'
       - set vpn ipsec esp-group ipsecesp mode 'tunnel'
@@ -21,18 +21,15 @@
       - set vpn ipsec ipsec-interfaces interface 'eth0'
       - set vpn ipsec logging log-modes 'all'
       - set vpn ipsec nat-traversal 'disable'
-      - set vpn ipsec site-to-site peer 194.170.9.185 authentication mode 'pre-shared-secret'
-      - set vpn ipsec site-to-site peer 194.170.9.185 authentication pre-shared-secret 'n!F@za@198$nJkqSFF'
-      - set vpn ipsec site-to-site peer 194.170.9.185 connection-type 'initiate'
-      - set vpn ipsec site-to-site peer 194.170.9.185 default-esp-group 'ipsecesp'
-      - set vpn ipsec site-to-site peer 194.170.9.185 ike-group 'ipsecike'
-      - set vpn ipsec site-to-site peer 194.170.9.185 ikev2-reauth 'inherit'
-      - set vpn ipsec site-to-site peer 194.170.9.185 local-address '195.229.192.161'
-      - set vpn ipsec site-to-site peer 194.170.9.185 tunnel 0 allow-nat-networks 'disable'
-      - set vpn ipsec site-to-site peer 194.170.9.185 tunnel 0 allow-public-networks 'disable'
-      - set vpn ipsec site-to-site peer 194.170.9.185 tunnel 0 local prefix '10.66.109.232/29'
-      - set vpn ipsec site-to-site peer 194.170.9.185 tunnel 0 remote prefix '10.67.1.10/32'
-      - set vpn ipsec site-to-site peer 194.170.9.185 tunnel 1 allow-nat-networks 'disable'
-      - set vpn ipsec site-to-site peer 194.170.9.185 tunnel 1 allow-public-networks 'disable'
-      - set vpn ipsec site-to-site peer 194.170.9.185 tunnel 1 local prefix '10.66.109.232/29'
-      - set vpn ipsec site-to-site peer 194.170.9.185 tunnel 1 remote prefix '192.168.124.11/32'
+      - set vpn ipsec site-to-site peer {{ vyos_ipsec_peer_ip }} authentication mode 'pre-shared-secret'
+      - set vpn ipsec site-to-site peer {{ vyos_ipsec_peer_ip }} authentication pre-shared-secret {{ vyos_ipsec_secret }}
+      - set vpn ipsec site-to-site peer {{ vyos_ipsec_peer_ip }} connection-type 'initiate'
+      - set vpn ipsec site-to-site peer {{ vyos_ipsec_peer_ip }} default-esp-group 'ipsecesp'
+      - set vpn ipsec site-to-site peer {{ vyos_ipsec_peer_ip }} ike-group 'ipsecike'
+      - set vpn ipsec site-to-site peer {{ vyos_ipsec_peer_ip }} ikev2-reauth 'inherit'
+      - set vpn ipsec site-to-site peer {{ vyos_ipsec_peer_ip }} local-address {{ vyos_ipsec_local_ip }}
+      - set vpn ipsec site-to-site peer {{ vyos_ipsec_peer_ip }} tunnel {{ vyos_ipsec_tunnel }} allow-nat-networks 'disable'
+      - set vpn ipsec site-to-site peer {{ vyos_ipsec_peer_ip }} tunnel {{ vyos_ipsec_tunnel }} allow-public-networks 'disable'
+      - set vpn ipsec site-to-site peer {{ vyos_ipsec_peer_ip }} tunnel {{ vyos_ipsec_tunnel }} local prefix {{ vyos_ipsec_local_prefix }}
+      - set vpn ipsec site-to-site peer {{ vyos_ipsec_peer_ip }} tunnel {{ vyos_ipsec_tunnel }} remote prefix {{ vyos_ipsec_remote_prefix }}
+

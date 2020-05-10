@@ -83,5 +83,9 @@
   when: (vyos_cmd is defined) and (vyos_cmd == "addnewrule2fw") and (vyos_fw_port_group is defined) and (vyos_fw_address_group is defined) and (vyos_fw_rule_number is defined) and (vyos_fw_name is defined)
   
 - name: "Setting up IPSec VPN Tunnel"
-  include_tasks: ipsec.yaml
-  when: (vyos_cmd is defined) and (vyos_cmd == "ipsec")
+  include_tasks: ipsec.yml
+  when: (vyos_cmd is defined) and (vyos_cmd == "ipsecadd")
+  
+- name: "Delete up IPSec VPN Tunnel"
+  include_tasks: ipsecdelete.yml
+  when: (vyos_cmd is defined) and (vyos_cmd == "ipsecadd")  
