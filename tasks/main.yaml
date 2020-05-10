@@ -81,3 +81,7 @@
       - set firewall name {{ vyos_fw_name }} rule {{ vyos_fw_rule_number }} destination group port-group {{ vyos_fw_port_group }}
       - set firewall name {{ vyos_fw_name }} rule {{ vyos_fw_rule_number }} description "accept rule"
   when: (vyos_cmd is defined) and (vyos_cmd == "addnewrule2fw") and (vyos_fw_port_group is defined) and (vyos_fw_address_group is defined) and (vyos_fw_rule_number is defined) and (vyos_fw_name is defined)
+  
+- name: "Setting up IPSec VPN Tunnel"
+  include_tasks: ipsec.yaml
+  when: (vyos_cmd is defined) and (vyos_cmd == "ipsec")

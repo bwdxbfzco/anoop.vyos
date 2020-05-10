@@ -1,0 +1,38 @@
+---
+# configure IPSec VPN on Vyos firewall
+
+- name: "setting up IPSec VPN"
+  vyos_config:
+    lines:
+      - set vpn ipsec auto-update 40
+      - set vpn ipsec esp-group fazaaDC2esp compression 'disable'
+      - set vpn ipsec esp-group ipsecesp compression 'disable'
+      - set vpn ipsec esp-group ipsecesp lifetime '3600'
+      - set vpn ipsec esp-group ipsecesp mode 'tunnel'
+      - set vpn ipsec esp-group ipsecesp pfs 'disable'
+      - set vpn ipsec esp-group ipsecesp proposal 1 encryption 'aes256'
+      - set vpn ipsec esp-group ipsecesp proposal 1 hash 'sha1'
+      - set vpn ipsec ike-group ipsecike ikev2-reauth 'no'
+      - set vpn ipsec ike-group ipsecike key-exchange 'ikev2'
+      - set vpn ipsec ike-group ipsecike lifetime '28800'
+      - set vpn ipsec ike-group ipsecike proposal 1 dh-group '5'
+      - set vpn ipsec ike-group ipsecike proposal 1 encryption 'aes256'
+      - set vpn ipsec ike-group ipsecike proposal 1 hash 'sha1'
+      - set vpn ipsec ipsec-interfaces interface 'eth0'
+      - set vpn ipsec logging log-modes 'all'
+      - set vpn ipsec nat-traversal 'disable'
+      - set vpn ipsec site-to-site peer 194.170.9.185 authentication mode 'pre-shared-secret'
+      - set vpn ipsec site-to-site peer 194.170.9.185 authentication pre-shared-secret 'n!F@za@198$nJkqSFF'
+      - set vpn ipsec site-to-site peer 194.170.9.185 connection-type 'initiate'
+      - set vpn ipsec site-to-site peer 194.170.9.185 default-esp-group 'ipsecesp'
+      - set vpn ipsec site-to-site peer 194.170.9.185 ike-group 'ipsecike'
+      - set vpn ipsec site-to-site peer 194.170.9.185 ikev2-reauth 'inherit'
+      - set vpn ipsec site-to-site peer 194.170.9.185 local-address '195.229.192.161'
+      - set vpn ipsec site-to-site peer 194.170.9.185 tunnel 0 allow-nat-networks 'disable'
+      - set vpn ipsec site-to-site peer 194.170.9.185 tunnel 0 allow-public-networks 'disable'
+      - set vpn ipsec site-to-site peer 194.170.9.185 tunnel 0 local prefix '10.66.109.232/29'
+      - set vpn ipsec site-to-site peer 194.170.9.185 tunnel 0 remote prefix '10.67.1.10/32'
+      - set vpn ipsec site-to-site peer 194.170.9.185 tunnel 1 allow-nat-networks 'disable'
+      - set vpn ipsec site-to-site peer 194.170.9.185 tunnel 1 allow-public-networks 'disable'
+      - set vpn ipsec site-to-site peer 194.170.9.185 tunnel 1 local prefix '10.66.109.232/29'
+      - set vpn ipsec site-to-site peer 194.170.9.185 tunnel 1 remote prefix '192.168.124.11/32'
