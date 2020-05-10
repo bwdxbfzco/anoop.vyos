@@ -10,7 +10,7 @@ Set the path for the config backup. Path starts from / on ansible host.
 
 Set the options for vyos_cmd variable in order for role to execute specific action.
 
-    vyos_cmd: backup, addip2fw, delip2fw, addport2fw, delport2fw, addnewport2fw, addnewaddress2fw, addnewrule2fw
+    vyos_cmd: fact, ping, init, backup, addip2fw, delip2fw, addport2fw, delport2fw, addnewport2fw, addnewaddress2fw, addnewrule2fw
 
 Set the description you wish to add to the interface.
 
