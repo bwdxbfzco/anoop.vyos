@@ -47,7 +47,7 @@
       - set firewall group port-group mssql-port-group 
       - set firewall group port-group denied-port-group
       - set firewall group port-group dns-port-group
-      - set firewall group port-group ssh-router-port port 49226
+      - set firewall group port-group ssh-router-port port 49227
       - set firewall group port-group mysql-port-group port 3306
       - set firewall group port-group denied-port-group port 123
       - set firewall group port-group denied-port-group port 445
