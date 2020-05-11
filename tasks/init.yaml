@@ -139,4 +139,4 @@
       - set interfaces ethernet eth0 firewall local name Outside2Router
       - set interfaces ethernet eth0 firewall in name Outside2Inside
       - set interfaces ethernet eth0 firewall out name Inside2Outside
-      - save
+    - save
