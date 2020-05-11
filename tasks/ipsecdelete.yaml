@@ -5,3 +5,4 @@
   vyos_config:
     lines:
       - delete vpn ipsec site-to-site peer {{ vyos_ipsec_peer_ip }}
+      - save

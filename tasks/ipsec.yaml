@@ -32,4 +32,5 @@
       - set vpn ipsec site-to-site peer {{ vyos_ipsec_peer_ip }} tunnel {{ vyos_ipsec_tunnel }} allow-public-networks 'disable'
       - set vpn ipsec site-to-site peer {{ vyos_ipsec_peer_ip }} tunnel {{ vyos_ipsec_tunnel }} local prefix {{ vyos_ipsec_local_prefix }}
       - set vpn ipsec site-to-site peer {{ vyos_ipsec_peer_ip }} tunnel {{ vyos_ipsec_tunnel }} remote prefix {{ vyos_ipsec_remote_prefix }}
+      - save
 
