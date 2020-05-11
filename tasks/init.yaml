@@ -120,12 +120,22 @@
       - set firewall name Outside2Inside rule 841 protocol tcp
       - set firewall name Outside2Inside rule 841 destination group port-group rdp-port-group
       - set firewall name Outside2Inside rule 841 description "rdp access drop rule"  
+      - set firewall name Outside2Router rule 903 action accept
+      - set firewall name Outside2Router rule 903 protocol icmp 
+      - set firewall name Outside2Router rule 903 source group address-group buzinessware-ips
+      - set firewall name Outside2Router rule 902 action accept
+      - set firewall name Outside2Router rule 902 protocol tcp_udp
+      - set firewall name Outside2Router rule 902 source group address-group dns-address-ips
+      - set firewall name Outside2Router rule 902 description "dns to router accept rule"
+      - set firewall name Outside2Router rule 901 action accept
+      - set firewall name Outside2Router rule 901 protocol tcp_udp
+      - set firewall name Outside2Router rule 901 destination group port-group dns-port-group
+      - set firewall name Outside2Router rule 901 description "dns to router accept rule"
       - set firewall name Outside2Router rule 900 action accept
       - set firewall name Outside2Router rule 900 protocol tcp
       - set firewall name Outside2Router rule 900 destination group port-group ssh-group-router
       - set firewall name Outside2Router rule 900 source group address-group buzinessware-ips
       - set firewall name Outside2Router rule 900 description "ssh to router allow rule"
-      - set interfaces ethernet eth0 firewall local name Outside2Router
       - set interfaces ethernet eth0 firewall in name Outside2Inside
       - set interfaces ethernet eth0 firewall out name Inside2Outside
     save: yes
