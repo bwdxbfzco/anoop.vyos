@@ -40,14 +40,14 @@
   vyos_config:
     lines:
       - set firewall group address-group {{ vyos_fw_address_group }} address {{ vyos_fw_ipaddress }}
-      - save
+    save: yes
   when: (vyos_cmd is defined) and (vyos_cmd == "addip2fw") and (vyos_fw_address_group is defined) and (vyos_fw_address_group is defined)
   
 - name: "delete {{ vyos_fw_ipaddress }} address in firewall address group {{ vyos_fw_address_group }}"  
   vyos_config:
     lines:
       - delete firewall group address-group {{ vyos_fw_address_group }} address {{ vyos_fw_ipaddress }}
-      - save
+    save: yes
   when: (vyos_cmd is defined) and (vyos_cmd == "delip2fw") and (vyos_fw_address_group is defined) and (vyos_fw_address_group is defined) 
 
 - name: "add {{ vyos_fw_port }} port in firewall port group {{ vyos_fw_port_group }}"  
@@ -60,7 +60,7 @@
   vyos_config:
     lines:
       - del firewall group port-group {{ vyos_fw_port_group }} port {{ vyos_fw_port }}
-      - save
+    save: yes
   when: (vyos_cmd is defined) and (vyos_cmd == "delport2fw") and (vyos_fw_port_group is defined) and (vyos_fw_port is defined) 
 
 - name: "add new port group {{ vyos_fw_port_group }} in firewall with port {{ vyos_fw_port }}"  
@@ -73,6 +73,7 @@
   vyos_config:
     lines:
       - set firewall group address-group {{ vyos_fw_address_group }} address {{ vyos_fw_ipaddress }}
+    save: yes
   when: (vyos_cmd is defined) and (vyos_cmd == "addnewaddress2fw") and (vyos_fw_address_group is defined) and (vyos_fw_ipaddress is defined)
     
 - name: "add new rule {{ vyos_fw_rule_number }} in firewall {{ vyos_fw_name }}"  
@@ -83,7 +84,7 @@
       - set firewall name {{ vyos_fw_name }} rule {{ vyos_fw_rule_number }} source group address-group {{ vyos_fw_address_group }}
       - set firewall name {{ vyos_fw_name }} rule {{ vyos_fw_rule_number }} destination group port-group {{ vyos_fw_port_group }}
       - set firewall name {{ vyos_fw_name }} rule {{ vyos_fw_rule_number }} description "accept rule"
-      - save
+    save: yes
   when: (vyos_cmd is defined) and (vyos_cmd == "addnewrule2fw") and (vyos_fw_port_group is defined) and (vyos_fw_address_group is defined) and (vyos_fw_rule_number is defined) and (vyos_fw_name is defined)
   
 - name: "Setting up IPSec VPN Tunnel"
