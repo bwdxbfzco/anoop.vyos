@@ -21,7 +21,7 @@
       - set firewall all-ping disable
       - set firewall name Inside2Outside default-action accept
       - set firewall name Outside2Inside default-action accept
-      - set firewall name Outside2Router default-action drop
+      - set firewall name Outside2Router default-action accept
       - set firewall name Outside2Inside enable-default-log
       - set firewall name Outside2Router enable-default-log
       - set firewall group address-group mysql-address-ips
@@ -136,6 +136,7 @@
       - set firewall name Outside2Router rule 900 destination group port-group ssh-group-router
       - set firewall name Outside2Router rule 900 source group address-group buzinessware-ips
       - set firewall name Outside2Router rule 900 description "ssh to router allow rule"
+      - set interfaces ethernet eth0 firewall local name Outside2Router
       - set interfaces ethernet eth0 firewall in name Outside2Inside
       - set interfaces ethernet eth0 firewall out name Inside2Outside
     save: yes
