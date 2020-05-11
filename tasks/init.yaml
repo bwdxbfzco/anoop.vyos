@@ -8,6 +8,7 @@
       - set system name-server 185.56.88.4
       - set system name-server 86.96.202.162
       - set system name-server 8.8.8.8
+      - set interface ethernet eth1 address dhcp
       - set service dns forwarding system
       - set service dns forwarding listen-on eth1
       - set firewall state-policy established action accept
