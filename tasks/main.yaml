@@ -93,4 +93,4 @@
   
 - name: "Delete up IPSec VPN Tunnel"
   include_tasks: ipsecdelete.yaml
-  when: (vyos_cmd is defined) and (vyos_cmd == "ipsecadd")  
+  when: (vyos_cmd is defined) and (vyos_cmd == "ipsecdel")  
