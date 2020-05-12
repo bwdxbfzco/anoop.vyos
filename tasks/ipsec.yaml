@@ -13,7 +13,7 @@
       - set vpn ipsec esp-group ipsecesp proposal 1 encryption 'aes256'
       - set vpn ipsec esp-group ipsecesp proposal 1 hash 'sha1'
       - set vpn ipsec ike-group ipsecike ikev2-reauth 'no'
-      - set vpn ipsec ike-group ipsecike key-exchange 'ikev2'
+      - set vpn ipsec ike-group ipsecike key-exchange 'ikev1'
       - set vpn ipsec ike-group ipsecike lifetime '28800'
       - set vpn ipsec ike-group ipsecike proposal 1 dh-group '5'
       - set vpn ipsec ike-group ipsecike proposal 1 encryption 'aes256'
