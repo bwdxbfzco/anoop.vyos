@@ -66,8 +66,77 @@
       - set firewall name Outside2Router rule 901 description "dns to router accept rule"
       - set firewall name Outside2Router rule 900 action accept
       - set firewall name Outside2Router rule 900 protocol tcp
-      - set firewall name Outside2Router rule 900 destination group port-group ssh-group-router
+      - set firewall name Outside2Router rule 900 destination group port-group ssh-router-port
       - set firewall name Outside2Router rule 900 source group address-group buzinessware-ips
-      - set firewall name Outside2Router rule 900 description "ssh to router allow rule"      
+      - set firewall name Outside2Router rule 900 description "ssh to router allow rule"
+      - set firewall name Outside2Inside rule 100 action drop
+      - set firewall name Outside2Inside rule 100 source group address-group banned-ips
+      - set firewall name Outside2Inside rule 100 protocol all
+      - set firewall name Outside2Inside rule 100 description "drop rule for banned ips"
+      - set firewall name Outside2Inside rule 101 action drop
+      - set firewall name Outside2Inside rule 101 protocol tcp
+      - set firewall name Outside2Inside rule 101 destination group port-group denied-port-group
+      - set firewall name Outside2Inside rule 101 description "drop rule denied ports"
+      - set firewall name Outside2Inside rule 102 action accept
+      - set firewall name Outside2Inside rule 102 protocol tcp_udp
+      - set firewall name Outside2Inside rule 102 source group address-group dns-address-ips
+      - set firewall name Outside2Inside rule 102 description "accept rule for dns"          
+      - set firewall name Outside2Inside rule 900 action accept
+      - set firewall name Outside2Inside rule 900 protocol tcp_udp
+      - set firewall name Outside2Inside rule 900 source group address-group sftp-address-ips
+      - set firewall name Outside2Inside rule 900 destination group port-group sftp-port-group
+      - set firewall name Outside2Inside rule 900 description "sftp access allow rule"
+      - set firewall name Outside2Inside rule 901 action drop
+      - set firewall name Outside2Inside rule 901 protocol tcp_udp
+      - set firewall name Outside2Inside rule 901 destination group port-group sftp-port-group
+      - set firewall name Outside2Inside rule 901 description "sftp access drop rule"      
+      - set firewall name Outside2Inside rule 800 action accept
+      - set firewall name Outside2Inside rule 800 protocol tcp_udp
+      - set firewall name Outside2Inside rule 800 source group address-group ssh-address-ips
+      - set firewall name Outside2Inside rule 800 destination group port-group ssh-port-group
+      - set firewall name Outside2Inside rule 800 description "ssh access allow rule"
+      - set firewall name Outside2Inside rule 801 action drop
+      - set firewall name Outside2Inside rule 801 protocol tcp_udp
+      - set firewall name Outside2Inside rule 801 destination group port-group ssh-port-group
+      - set firewall name Outside2Inside rule 801 description "ssh access drop rule"      
+      - set firewall name Outside2Inside rule 810 action accept
+      - set firewall name Outside2Inside rule 810 protocol tcp_udp
+      - set firewall name Outside2Inside rule 810 source group address-group sftp-address-ips
+      - set firewall name Outside2Inside rule 810 destination group port-group sftp-port-group
+      - set firewall name Outside2Inside rule 810 description "sftp access allow rule"
+      - set firewall name Outside2Inside rule 811 action drop
+      - set firewall name Outside2Inside rule 811 protocol tcp_udp
+      - set firewall name Outside2Inside rule 811 destination group port-group sftp-port-group
+      - set firewall name Outside2Inside rule 811 description "sftp access drop rule"             
+      - set firewall name Outside2Inside rule 820 action accept
+      - set firewall name Outside2Inside rule 820 protocol tcp
+      - set firewall name Outside2Inside rule 820 source group address-group mysql-address-ips
+      - set firewall name Outside2Inside rule 820 destination group port-group mysql-port-group
+      - set firewall name Outside2Inside rule 820 description "mysql access allow rule"
+      - set firewall name Outside2Inside rule 821 action drop
+      - set firewall name Outside2Inside rule 821 protocol tcp
+      - set firewall name Outside2Inside rule 821 destination group port-group mysql-port-group
+      - set firewall name Outside2Inside rule 821 description "mysql access drop rule" 
+      - set firewall name Outside2Inside rule 830 action accept
+      - set firewall name Outside2Inside rule 830 protocol tcp
+      - set firewall name Outside2Inside rule 830 source group address-group mssql-address-ips
+      - set firewall name Outside2Inside rule 830 destination group port-group mssql-port-group
+      - set firewall name Outside2Inside rule 830 description "mssql access allow rule"
+      - set firewall name Outside2Inside rule 831 action drop
+      - set firewall name Outside2Inside rule 831 protocol tcp
+      - set firewall name Outside2Inside rule 831 destination group port-group mssql-port-group
+      - set firewall name Outside2Inside rule 831 description "mssql access drop rule"       
+      - set firewall name Outside2Inside rule 840 action accept
+      - set firewall name Outside2Inside rule 840 protocol tcp
+      - set firewall name Outside2Inside rule 840 source group address-group rdp-address-ips
+      - set firewall name Outside2Inside rule 840 destination group port-group rdp-port-group
+      - set firewall name Outside2Inside rule 840 description "rdp access allow rule"
+      - set firewall name Outside2Inside rule 841 action drop
+      - set firewall name Outside2Inside rule 841 protocol tcp
+      - set firewall name Outside2Inside rule 841 destination group port-group rdp-port-group
+      - set firewall name Outside2Inside rule 841 description "rdp access drop rule"  
+      - set interfaces ethernet eth0 firewall local name Outside2Router
+      - set interfaces ethernet eth0 firewall in name Outside2Inside
+      - set interfaces ethernet eth0 firewall out name Inside2Outside      
       - set interface ethernet eth1 address dhcp
     save: yes
