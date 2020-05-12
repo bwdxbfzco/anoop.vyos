@@ -94,3 +94,13 @@
 - name: "Delete up IPSec VPN Tunnel"
   include_tasks: ipsecdelete.yaml
   when: (vyos_cmd is defined) and (vyos_cmd == "ipsecdel")  
+  
+- name: "Add New user to Vyos"
+  include_tasks: user.yaml
+  when: (vyos_cmd is defined) and (vyos_cmd == "useradd")   
+  
+- name: "Del New user to Vyos"
+  vyos_config:
+    lines: del system login user {{ vyos_user }}
+    save: yes
+  when: (vyos_cmd is defined) and (vyos_cmd == "userdel")   

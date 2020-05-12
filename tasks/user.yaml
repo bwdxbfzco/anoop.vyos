@@ -1,0 +1,11 @@
+---
+# initalize Vyos firewall
+
+- name: "initalizing Vyos firewall"
+  vyos_config:
+    lines:
+      - set system login user {{ vyos_user }}
+      - set system login user {{ vyos_user }} level {{ vyos_operator_level }}
+      - set system login user {{ vyos_user }} authentication plaintext-password {{ vyos_user_password }}
+    save: yes
+      
