@@ -138,5 +138,4 @@
       - set interfaces ethernet eth0 firewall local name Outside2Router
       - set interfaces ethernet eth0 firewall in name Outside2Inside
       - set interfaces ethernet eth0 firewall out name Inside2Outside      
-      - set interface ethernet eth1 address dhcp
     save: yes
