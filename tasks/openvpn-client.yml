@@ -1,0 +1,38 @@
+---
+   
+# generating server certificates        
+- name: setfact 
+  set_fact:
+    ansible_connection: ssh
+            
+# setting folder and files on the Vyos Router
+- name: create client p12 file
+  shell: "./easyrsa --passout=pass: export-p12 {{openvpn_client}}"
+  args: 
+    chdir: /config/auth/ovpn/
+  when: (bw_openvpn_cmd == "create_user") and (openvpn_client is defined)
+    
+# fetch certificate for new user
+- name: fetching the newly created certificate
+  fetch:
+    src: /config/auth/ovpn/pki/private/{{openvpn_client}}.p12
+    dest: /etc/ssl/crt/
+  when: (bw_openvpn_cmd == "create_user") and (openvpn_client is defined)
+
+# create openvpn template
+- name: create openvpn template
+  template:
+    src: openvpn.j2
+    dest: /etc/ssl/crt/{{openvpn_host}}/{{openvpn_client}}.ovpn
+    
+- name: Sending an e-mail
+  mail:
+    to: Anoop Sharda <anoop@buzinessware.com>
+    subject: OpenSSL VPN User
+    body: New User has been successfully created. Attached are the configuration files.
+    subtype: html
+    from: system@buzinessware.com
+    attach:
+      - /etc/ssl/crt/{{openvpn_host}}/config/auth/ovpn/pki/private/{{openvpn_client}}.p12
+      - /etc/ssl/crt/{{openvpn_host}}/{{openvpn_client}}.ovpn
+  delegate_to: localhost

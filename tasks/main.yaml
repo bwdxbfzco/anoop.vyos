@@ -103,4 +103,12 @@
   vyos_config:
     lines: del system login user {{ vyos_user }}
     save: yes
-  when: (vyos_cmd is defined) and (vyos_cmd == "userdel")   
+  when: (vyos_cmd is defined) and (vyos_cmd == "userdel")
+
+- name: "Initializing OpenVPN"
+  include_tasks: openvpn-init.yaml
+  when: (vyos_cmd is defined) and (vyos_cmd == "openvpn-init")
+
+- name: "Add OpenVPN Client"
+  include_tasks: openvpn-client.yaml
+  when: (vyos_cmd is defined) and (vyos_cmd == "openvpn-client-add")   

@@ -1,0 +1,48 @@
+---
+
+# generating server certificates        
+- name: setfact 
+  set_fact:
+    ansible_connection: ssh
+    
+# initlize RSA
+- name: initlize RSA
+  shell: ./easyrsa --batch init-pki
+  args: 
+    chdir: /config/auth/ovpn/
+    
+# build CA
+- name: build CA
+  shell: ./easyrsa --batch build-ca nopass
+  args: 
+    chdir: /config/auth/ovpn/        
+    
+# build server certificate
+- name: build server certificate
+  shell: ./easyrsa build-server-full {{openvpn_host}} nopass
+  args: 
+    chdir: /config/auth/ovpn/           
+    
+# build dh certificate
+- name: build dh certificate
+  shell: ./easyrsa --keysize=1024 gen-dh 
+  args: 
+    chdir: /config/auth/ovpn/         
+    
+- name: setfact 
+  set_fact:
+    ansible_connection: network_cli
+    
+#Configurating VPN Interface
+- name: configurating OpenVPN Environment
+  vyos_config:
+    lines:
+      - set interface openvpn vtun0 mode server
+      - set interfaces openvpn vtun0 use-lzo-compression
+      - set interface openvpn vtun0 server name-server 1.1.1.1
+      - set interface openvpn vtun0 server subnet 172.16.20.0/24
+      - set interface openvpn vtun0 tls ca-cert-file /config/auth/ovpn/pki/ca.crt
+      - set interface openvpn vtun0 tls cert-file /config/auth/ovpn/pki/issued/{{openvpn_host}}.crt
+      - set interface openvpn vtun0 tls dh-file /config/auth/ovpn/pki/dh.pem
+      - set interface openvpn vtun0 tls key-file /config/auth/ovpn/pki/private/{{openvpn_host}}.key
+    save: yes

@@ -3,3 +3,4 @@
 vyos_interface_description: "interface description"
 vyos_backup_path: "backup"
 vyos_host: 8.8.8.8
+openvpn_host: router
