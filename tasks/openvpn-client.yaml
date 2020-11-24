@@ -19,14 +19,14 @@
   shell: "./easyrsa --passout=pass: export-p12 {{openvpn_client}}"
   args: 
     chdir: /config/auth/ovpn/
-  when: (bw_openvpn_cmd == "openvpn-client-add") and (openvpn_client is defined)
+  when: (openvpn_client is defined)
     
 # fetch certificate for new user
 - name: fetching the newly created certificate
   fetch:
     src: "/config/auth/ovpn/pki/private/{{openvpn_client}}.p12"
     dest: "{{openvpn_dest_folder}}"
-  when: (bw_openvpn_cmd == "openvpn-client-add") and (openvpn_client is defined)
+  when: (openvpn_client is defined)
 
 # create openvpn template
 - name: create openvpn template
