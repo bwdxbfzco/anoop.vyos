@@ -42,6 +42,6 @@
     subtype: html
     from: system@buzinessware.com
     attach:
-      - {{openvpn_dest_folder}}/{{openvpn_host}}/config/auth/ovpn/pki/private/{{openvpn_client}}.p12
-      - {{openvpn_dest_folder}}/{{openvpn_host}}/{{openvpn_client}}.ovpn
+      - "{{openvpn_dest_folder}}/{{openvpn_host}}/config/auth/ovpn/pki/private/{{openvpn_client}}.p12"
+      - "{{openvpn_dest_folder}}/{{openvpn_host}}/{{openvpn_client}}.ovpn"
   delegate_to: localhost
