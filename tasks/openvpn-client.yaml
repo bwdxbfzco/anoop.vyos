@@ -32,7 +32,7 @@
 - name: create openvpn template
   template:
     src: templates/openvpn.j2
-    dest: {{openvpn_dest_folder}}/{{openvpn_host}}/{{openvpn_client}}.ovpn
+    dest: "{{openvpn_dest_folder}}/{{openvpn_host}}/{{openvpn_client}}.ovpn"
     
 - name: Sending an e-mail
   mail:
