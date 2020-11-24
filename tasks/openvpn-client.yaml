@@ -19,12 +19,15 @@
   shell: ./easyrsa build-client-full {{openvpn_client}} nopass
   args: 
     chdir: /config/auth/ovpn/
+  ignore_errors: yes
+  when: (openvpn_client is defined)
         
 # setting folder and files on the Vyos Router
 - name: create client p12 file
   shell: "./easyrsa --passout=pass: export-p12 {{openvpn_client}}"
   args: 
     chdir: /config/auth/ovpn/
+  ignore_errors: yes
   when: (openvpn_client is defined)
     
 # fetch certificate for new user
