@@ -40,7 +40,7 @@
 - name: setfact 
   set_fact:
     ansible_connection: network_cli
-    ansible_python_interpreter: /usr/libexec/platform-python
+    ansible_python_interpreter: "/usr/libexec/platform-python"
     
 #Configurating VPN Interface
 - name: configurating OpenVPN Environment
