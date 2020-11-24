@@ -2,7 +2,7 @@
 # gathering fact
 - name: "vyos fact gather"
   vyos_facts:
-    gather_subset: all
+    gather_subset: "!config"
     
 # generating server certificates        
 - name: setfact 
