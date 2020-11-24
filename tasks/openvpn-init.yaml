@@ -11,7 +11,7 @@
   register: openvpn_host
 
 - debug:
-    msg: {{openvpn_host}}
+    msg: "{{openvpn_host}}"
     
 # initlize RSA
 - name: initlize RSA
