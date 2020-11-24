@@ -12,7 +12,7 @@
 
 - name: setfact
   set_fact:
-    openvpn_host: {{_result/stdout}}
+    openvpn_host: "{{_result/stdout}}"
     
 - debug:
     msg: "{{openvpn_host}}"
