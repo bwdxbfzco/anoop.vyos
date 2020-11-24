@@ -111,4 +111,8 @@
 
 - name: "Add OpenVPN Client"
   include_tasks: openvpn-client.yaml
-  when: (vyos_cmd is defined) and (vyos_cmd == "openvpn-client-add")   
+  when: (vyos_cmd is defined) and (vyos_cmd == "openvpn-client-add")
+  
+- name: "Deleting OpenVPN Client"
+  include_tasks: openvpn-client.yaml
+  when: (vyos_cmd is defined) and (vyos_cmd == "openvpn-client-delete")   

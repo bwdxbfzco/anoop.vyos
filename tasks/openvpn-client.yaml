@@ -20,7 +20,7 @@
   args: 
     chdir: /config/auth/ovpn/
   ignore_errors: yes
-  when: (openvpn_client is defined)
+  when: (openvpn_client is defined) and (vyos_cmd == "openvpn-client-add")
         
 # setting folder and files on the Vyos Router
 - name: create client p12 file
@@ -28,26 +28,28 @@
   args: 
     chdir: /config/auth/ovpn/
   ignore_errors: yes
-  when: (openvpn_client is defined)
+  when: (openvpn_client is defined) and (vyos_cmd == "openvpn-client-add")
     
 # fetch certificate for new user
 - name: fetching the newly created certificate
   fetch:
     src: "/config/auth/ovpn/pki/private/{{openvpn_client}}.p12"
     dest: "{{openvpn_dest_folder}}"
-  when: (openvpn_client is defined)
+  when: (openvpn_client is defined) and (vyos_cmd == "openvpn-client-add")
 
 - name: create temp directory
   file:
     path: "/tmp/{{openvpn_host}}"
     state: directory
     mode: '0755'
+  when: (vyos_cmd == "openvpn-client-add")
         
 # create openvpn template
 - name: create openvpn template
   template:
     src: templates/openvpn.j2
     dest: "{{openvpn_dest_folder}}/{{openvpn_host}}/{{openvpn_client}}.ovpn"
+  when: (vyos_cmd == "openvpn-client-add")
     
 - name: Sending an e-mail
   mail:
@@ -63,10 +65,19 @@
     attach:
       - "/config/auth/ovpn/pki/private/{{openvpn_client}}.p12"
       - "{{openvpn_dest_folder}}/{{openvpn_host}}/{{openvpn_client}}.ovpn"
+    when: (vyos_cmd == "openvpn-client-add")
       
 - name: deleting temp files
   file: 
     path: "{{openvpn_dest_folder}}/{{openvpn_host}}/{{openvpn_client}}.ovpn"
     state: absent
+  when: (vyos_cmd == "openvpn-client-add")
+  
+- name: revoking user
+  shell: "./easyrsa revoke {{openvpn_client}}"
+  args: 
+    chdir: /config/auth/ovpn/
+  ignore_errors: yes
+  when: (vyos_cmd == "openvpn-client-delete")
   
     
