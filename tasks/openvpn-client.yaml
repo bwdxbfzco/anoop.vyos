@@ -65,7 +65,7 @@
     attach:
       - "/config/auth/ovpn/pki/private/{{openvpn_client}}.p12"
       - "{{openvpn_dest_folder}}/{{openvpn_host}}/{{openvpn_client}}.ovpn"
-    when: (vyos_cmd == "openvpn-client-add")
+  when: (vyos_cmd == "openvpn-client-add")
       
 - name: deleting temp files
   file: 
