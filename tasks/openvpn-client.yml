@@ -16,14 +16,14 @@
 - name: fetching the newly created certificate
   fetch:
     src: /config/auth/ovpn/pki/private/{{openvpn_client}}.p12
-    dest: /etc/ssl/crt/
+    dest: {{openvpn_dest_folder}}
   when: (bw_openvpn_cmd == "create_user") and (openvpn_client is defined)
 
 # create openvpn template
 - name: create openvpn template
   template:
-    src: openvpn.j2
-    dest: /etc/ssl/crt/{{openvpn_host}}/{{openvpn_client}}.ovpn
+    src: templates/openvpn.j2
+    dest: {{openvpn_dest_folder}}/{{openvpn_host}}/{{openvpn_client}}.ovpn
     
 - name: Sending an e-mail
   mail:
@@ -33,6 +33,6 @@
     subtype: html
     from: system@buzinessware.com
     attach:
-      - /etc/ssl/crt/{{openvpn_host}}/config/auth/ovpn/pki/private/{{openvpn_client}}.p12
-      - /etc/ssl/crt/{{openvpn_host}}/{{openvpn_client}}.ovpn
+      - {{openvpn_dest_folder}}/{{openvpn_host}}/config/auth/ovpn/pki/private/{{openvpn_client}}.p12
+      - {{openvpn_dest_folder}}/{{openvpn_host}}/{{openvpn_client}}.ovpn
   delegate_to: localhost
