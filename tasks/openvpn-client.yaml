@@ -51,6 +51,10 @@
     
 - name: Sending an e-mail
   mail:
+    host: smarthost.apps.ae
+    port: 25
+    username: mailuser
+    password: X2avPBU9P97s
     to: Anoop Sharda <anoop@buzinessware.com>
     subject: OpenSSL VPN User
     body: New User has been successfully created. Attached are the configuration files.
