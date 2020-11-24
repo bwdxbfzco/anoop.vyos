@@ -36,7 +36,7 @@
     
 # build CA
 - name: build CA
-  shell: ./easyrsa --batch build-ca nopass
+  shell: ./easyrsa --req-cn=Buzinessware --batch build-ca nopass
   args: 
     chdir: /config/auth/ovpn/        
     
