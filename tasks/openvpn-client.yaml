@@ -37,6 +37,12 @@
     dest: "{{openvpn_dest_folder}}"
   when: (openvpn_client is defined)
 
+- name: create temp directory
+  file:
+    path: "/tmp/{{openvpn_host}}"
+    state: directory
+    mode: '0755' 
+        
 # create openvpn template
 - name: create openvpn template
   template:
