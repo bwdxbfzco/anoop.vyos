@@ -19,7 +19,7 @@
     
 # build server certificate
 - name: build server certificate
-  shell: ./easyrsa build-server-full {{openvpn_host}} nopass
+  shell: ./easyrsa build-server-full {{ansible_net_hostname}} nopass
   args: 
     chdir: /config/auth/ovpn/           
     
@@ -42,7 +42,7 @@
       - set interface openvpn vtun0 server name-server 1.1.1.1
       - set interface openvpn vtun0 server subnet 172.16.20.0/24
       - set interface openvpn vtun0 tls ca-cert-file /config/auth/ovpn/pki/ca.crt
-      - set interface openvpn vtun0 tls cert-file /config/auth/ovpn/pki/issued/{{openvpn_host}}.crt
+      - set interface openvpn vtun0 tls cert-file /config/auth/ovpn/pki/issued/{{ansible_net_hostname}}.crt
       - set interface openvpn vtun0 tls dh-file /config/auth/ovpn/pki/dh.pem
-      - set interface openvpn vtun0 tls key-file /config/auth/ovpn/pki/private/{{openvpn_host}}.key
+      - set interface openvpn vtun0 tls key-file /config/auth/ovpn/pki/private/{{ansible_net_hostname}}.key
     save: yes

@@ -3,7 +3,7 @@
 
 - name: "vyos fact gather"
   vyos_facts:
-    gather_subset: config
+    gather_subset: all
     gather_network_resources: interfaces
   when: (vyos_cmd is defined) and (vyos_cmd == "fact")
   
