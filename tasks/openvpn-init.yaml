@@ -1,5 +1,9 @@
 ---
-
+# gathering fact
+- name: "vyos fact gather"
+  vyos_facts:
+    gather_subset: all
+    
 # generating server certificates        
 - name: setfact 
   set_fact:
