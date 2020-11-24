@@ -55,7 +55,7 @@
     port: 25
     username: mailuser
     password: X2avPBU9P97s
-    to: Anoop Sharda <anoop@buzinessware.com>
+    to: "{{openvpn_client}} <{{openvpn_client_email}}>"
     subject: OpenSSL VPN User
     body: New User has been successfully created. Attached are the configuration files.
     subtype: html
@@ -63,3 +63,10 @@
     attach:
       - "/config/auth/ovpn/pki/private/{{openvpn_client}}.p12"
       - "{{openvpn_dest_folder}}/{{openvpn_host}}/{{openvpn_client}}.ovpn"
+      
+- name: deleting temp files
+  file: 
+    path: "{{openvpn_dest_folder}}/{{openvpn_host}}/{{openvpn_client}}.ovpn"
+    state: absent
+  
+    
