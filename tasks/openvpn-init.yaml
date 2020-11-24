@@ -13,10 +13,7 @@
 - name: setfact
   set_fact:
     openvpn_host: "{{_result.stdout}}"
-    
-- debug:
-    msg: "{{openvpn_host}}"
-    
+        
 # initlize RSA
 - name: initlize RSA
   shell: ./easyrsa --batch init-pki

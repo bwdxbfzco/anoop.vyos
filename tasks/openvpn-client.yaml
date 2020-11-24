@@ -5,6 +5,15 @@
   set_fact:
     ansible_connection: ssh
             
+# gather hostname
+- name: gethering hostname
+  command: /bin/hostname
+  register: _result
+
+- name: setfact
+  set_fact:
+    openvpn_host: "{{_result.stdout}}"
+    
 # setting folder and files on the Vyos Router
 - name: create client p12 file
   shell: "./easyrsa --passout=pass: export-p12 {{openvpn_client}}"
