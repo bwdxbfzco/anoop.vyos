@@ -13,7 +13,12 @@
 - name: setfact
   set_fact:
     openvpn_host: "{{_result.stdout}}"
-        
+            
+- unarchive:
+    src: https://github.com/OpenVPN/easy-rsa/releases/download/v3.0.8/EasyRSA-3.0.8.tgz
+    dest: /config/auth
+    remote_src: True
+    
 # initlize RSA
 - name: initlize RSA
   shell: ./easyrsa --batch init-pki
