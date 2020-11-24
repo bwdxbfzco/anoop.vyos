@@ -15,6 +15,12 @@
     openvpn_host: "{{_result.stdout}}"
     
 # setting folder and files on the Vyos Router
+- name: create client certificate
+  shell: ./easyrsa build-client-full {{openvpn_client}} nopass
+  args: 
+    chdir: /config/auth/ovpn/
+        
+# setting folder and files on the Vyos Router
 - name: create client p12 file
   shell: "./easyrsa --passout=pass: export-p12 {{openvpn_client}}"
   args: 
