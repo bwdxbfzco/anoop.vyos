@@ -10,6 +10,9 @@
   command: /bin/hostname
   register: openvpn_host
 
+- debug:
+    msg: {{openvpn_host}}
+    
 # initlize RSA
 - name: initlize RSA
   shell: ./easyrsa --batch init-pki
@@ -37,6 +40,7 @@
 - name: setfact 
   set_fact:
     ansible_connection: network_cli
+    ansible_python_interpreter: /usr/libexec/platform-python
     
 #Configurating VPN Interface
 - name: configurating OpenVPN Environment
