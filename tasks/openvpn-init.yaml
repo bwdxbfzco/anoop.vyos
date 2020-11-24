@@ -8,8 +8,12 @@
 # gather hostname
 - name: gethering hostname
   command: /bin/hostname
-  register: openvpn_host
+  register: _result
 
+- name: setfact
+  set_fact:
+    openvpn_host: {{_result/stdout}}
+    
 - debug:
     msg: "{{openvpn_host}}"
     
