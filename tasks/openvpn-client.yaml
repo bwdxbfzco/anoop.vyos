@@ -41,7 +41,7 @@
   file:
     path: "/tmp/{{openvpn_host}}"
     state: directory
-    mode: '0755' 
+    mode: '0755'
         
 # create openvpn template
 - name: create openvpn template
@@ -61,5 +61,5 @@
     subtype: html
     from: system@buzinessware.com
     attach:
-      - "{{openvpn_dest_folder}}/{{openvpn_host}}/config/auth/ovpn/pki/private/{{openvpn_client}}.p12"
+      - "/config/auth/ovpn/pki/private/{{openvpn_client}}.p12"
       - "{{openvpn_dest_folder}}/{{openvpn_host}}/{{openvpn_client}}.ovpn"
