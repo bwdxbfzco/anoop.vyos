@@ -14,10 +14,6 @@
   set_fact:
     openvpn_host: "{{_result.stdout}}"
             
-- name: setfact
-  set_fact:
-    vyos_private_network: "{{_result_ipaddress.stdout}}"
-    
 - name: remove old folder
   file: 
     path: /config/auth/ovpn
