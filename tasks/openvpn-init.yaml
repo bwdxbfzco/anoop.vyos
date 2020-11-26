@@ -10,11 +10,6 @@
   command: /bin/hostname
   register: _result
   
-- name: gethering internal ip address
-  shell: |
-    /sbin/ifconfig eth1 | grep 'inet addr' | cut -d: -f2 | awk '{print $1}'
-  register: _result_ipaddress
-
 - name: setfact
   set_fact:
     openvpn_host: "{{_result.stdout}}"
