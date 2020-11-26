@@ -36,13 +36,13 @@
     
 # build CA
 - name: build CA
-  shell: ./easyrsa --req-cn=Buzinessware --batch build-ca nopass
+  shell: ./easyrsa --keysize=1024 --req-cn=Buzinessware --batch build-ca nopass
   args: 
     chdir: /config/auth/ovpn/        
     
 # build server certificate
 - name: build server certificate
-  shell: ./easyrsa build-server-full {{openvpn_host}} nopass
+  shell: ./easyrsa --keysize=1024 build-server-full {{openvpn_host}} nopass
   args: 
     chdir: /config/auth/ovpn/           
     
@@ -79,3 +79,4 @@
       - set nat source rule 998 source address 172.16.20.0/24
       - set nat source rule 998 outbound-interface eth0
     save: yes
+  when: (vyos_private_network is defined) and (vyos_private_network|length > 0)

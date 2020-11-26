@@ -16,27 +16,12 @@
     
 # setting folder and files on the Vyos Router
 - name: create client certificate
-  shell: ./easyrsa build-client-full {{openvpn_client}} nopass
+  shell: ./easyrsa --keysize=1024 build-client-full {{openvpn_client}} nopass
   args: 
     chdir: /config/auth/ovpn/
   ignore_errors: yes
   when: (openvpn_client is defined) and (vyos_cmd == "openvpn-client-add")
-        
-# setting folder and files on the Vyos Router
-- name: create client p12 file
-  shell: "./easyrsa --passout=pass: export-p12 {{openvpn_client}}"
-  args: 
-    chdir: /config/auth/ovpn/
-  ignore_errors: yes
-  when: (openvpn_client is defined) and (vyos_cmd == "openvpn-client-add")
-    
-# fetch certificate for new user
-- name: fetching the newly created certificate
-  fetch:
-    src: "/config/auth/ovpn/pki/private/{{openvpn_client}}.p12"
-    dest: "{{openvpn_dest_folder}}"
-  when: (openvpn_client is defined) and (vyos_cmd == "openvpn-client-add")
-
+           
 - name: create temp directory
   file:
     path: "/tmp/{{openvpn_host}}"
@@ -63,7 +48,9 @@
     subtype: html
     from: system@buzinessware.com
     attach:
-      - "/config/auth/ovpn/pki/private/{{openvpn_client}}.p12"
+      - "/config/auth/ovpn/pki/private/{{openvpn_client}}.key"
+      - "/config/auth/ovpn/pki/issues/{{openvpn_client}}.crt"
+      - "/config/auth/ovpn/pki/ca.crt"
       - "{{openvpn_dest_folder}}/{{openvpn_host}}/{{openvpn_client}}.ovpn"
   when: (vyos_cmd == "openvpn-client-add")
       

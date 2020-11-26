@@ -3,8 +3,10 @@ persist-tun
 persist-key
 client
 proto udp
-remote-cert-tls server
+ns-cert-type server
 verb 2
 remote {{ansible_host}} 1194 udp
 lport 0
-pkcs12 {{openvpn_client}}.p12
+cert {{openvpn_client}}.crt
+key {{openvpn_client}}.key
+ca ca.crt
