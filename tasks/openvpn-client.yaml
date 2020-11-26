@@ -49,7 +49,7 @@
     from: system@buzinessware.com
     attach:
       - "/config/auth/ovpn/pki/private/{{openvpn_client}}.key"
-      - "/config/auth/ovpn/pki/issues/{{openvpn_client}}.crt"
+      - "/config/auth/ovpn/pki/issued/{{openvpn_client}}.crt"
       - "/config/auth/ovpn/pki/ca.crt"
       - "{{openvpn_dest_folder}}/{{openvpn_host}}/{{openvpn_client}}.ovpn"
   when: (vyos_cmd == "openvpn-client-add")
