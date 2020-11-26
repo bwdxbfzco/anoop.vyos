@@ -9,11 +9,19 @@
 - name: gethering hostname
   command: /bin/hostname
   register: _result
+  
+- name: gethering internal ip address
+  command: /sbin/ifconfig eth1 | grep 'inet addr' | cut -d: -f2 | awk '{print $1}'
+  register: _result_ipaddress
 
 - name: setfact
   set_fact:
     openvpn_host: "{{_result.stdout}}"
             
+- name: setfact
+  set_fact:
+    vyos_private_network: "{{_result_ipaddress.stdout}}"
+    
 - name: remove old folder
   file: 
     path: /config/auth/ovpn
@@ -69,4 +77,13 @@
       - set interface openvpn vtun0 tls cert-file /config/auth/ovpn/pki/issued/{{openvpn_host}}.crt
       - set interface openvpn vtun0 tls dh-file /config/auth/ovpn/pki/dh.pem
       - set interface openvpn vtun0 tls key-file /config/auth/ovpn/pki/private/{{openvpn_host}}.key
+      - set nat source rule 999 outbound-interface eth0
+      - set nat source rule 999 protocol all
+      - set nat source rule 999 source address 172.16.20.0/24
+      - set nat source rule 999 translation address masquerade
+      - set nat source rule 998 exclude
+      - set nat source rule 998 protocol all
+      - set nat source rule 998 destination address {{ vyos_private_network }}
+      - set nat source rule 998 source address 172.16.20.0/24
+      - set nat source rule 998 outbound-interface eth0
     save: yes

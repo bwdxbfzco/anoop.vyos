@@ -1,13 +1,10 @@
-dev tun
+dev tun0
 persist-tun
 persist-key
-cipher AES-256-CBC
-auth SHA1
-tls-client
 client
-resolv-retry infinite
+proto udp
+remote-cert-tls server
+verb 2
 remote {{ansible_host}} 1194 udp
 lport 0
 pkcs12 {{openvpn_client}}.p12
-comp-lzo
-
