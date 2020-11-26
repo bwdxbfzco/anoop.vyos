@@ -11,7 +11,8 @@
   register: _result
   
 - name: gethering internal ip address
-  command: "/sbin/ifconfig eth1 | grep 'inet addr' | cut -d: -f2 | awk '{print $1}'"
+  shell: |
+    /sbin/ifconfig eth1 | grep 'inet addr' | cut -d: -f2 | awk '{print $1}'
   register: _result_ipaddress
 
 - name: setfact
