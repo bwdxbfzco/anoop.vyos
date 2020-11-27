@@ -73,7 +73,7 @@
     subtype: html
     from: system@buzinessware.com
     attach:
-      - "/tmp/{{openvpn_client}}.ovpn"
+      - "/tmp/{{openvpn_client}}.zip"
   when: (vyos_cmd == "openvpn-client-add")
       
 - name: deleting temp files
