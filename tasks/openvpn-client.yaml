@@ -24,7 +24,7 @@
            
 - name: create temp directory
   file:
-    path: "/tmp/{{openvpn_host}}"
+    path: "/tmp/{{openvpn_client}}"
     state: directory
     mode: '0755'
   when: (vyos_cmd == "openvpn-client-add")
@@ -33,8 +33,33 @@
 - name: create openvpn template
   template:
     src: templates/openvpn.j2
-    dest: "{{openvpn_dest_folder}}/{{openvpn_host}}/{{openvpn_client}}.ovpn"
+    dest: "{{openvpn_dest_folder}}/{{openvpn_client}}/{{openvpn_client}}.ovpn"
   when: (vyos_cmd == "openvpn-client-add")
+
+# copy all files to temp directory
+- name: copy private key to temp directory
+  copy: 
+    src: "/config/auth/ovpn/pki/private/{{openvpn_client}}.key" 
+    dest: "/tmp/{{openvpn_client}}/"
+    remote_src: yes
+    
+- name: copy certificate to temp directory
+  copy: 
+    src: "/config/auth/ovpn/pki/issued/{{openvpn_client}}.crt" 
+    dest: "/tmp/{{openvpn_client}}/"
+    remote_src: yes   
+
+- name: copy ca certificate to temp directory
+  copy: 
+    src: "/config/auth/ovpn/pki/ca.crt" 
+    dest: "/tmp/{{openvpn_client}}/"
+    remote_src: yes  
+   
+- name: Compress directory 
+  archive:
+    path: "/tmp/{{openvpn_client}}/"
+    dest: "/tmp/{{openvpn_client}}.zip"
+    format: zip
     
 - name: Sending an e-mail
   mail:
@@ -48,17 +73,26 @@
     subtype: html
     from: system@buzinessware.com
     attach:
-      - "/config/auth/ovpn/pki/private/{{openvpn_client}}.key"
-      - "/config/auth/ovpn/pki/issued/{{openvpn_client}}.crt"
-      - "/config/auth/ovpn/pki/ca.crt"
-      - "{{openvpn_dest_folder}}/{{openvpn_host}}/{{openvpn_client}}.ovpn"
+      - "/tmp/{{openvpn_client}}.ovpn"
   when: (vyos_cmd == "openvpn-client-add")
       
 - name: deleting temp files
   file: 
-    path: "{{openvpn_dest_folder}}/{{openvpn_host}}/{{openvpn_client}}.ovpn"
+    path: "/tmp/{{openvpn_client}}.zip"
     state: absent
   when: (vyos_cmd == "openvpn-client-add")
+  
+- name: deleting temp files
+  file: 
+    path: "/tmp/{{openvpn_client}}.zip"
+    state: absent
+  when: (vyos_cmd == "openvpn-client-add")  
+  
+- name: deleting folder files
+  file: 
+    path: "/tmp/{{openvpn_client}}/"
+    state: absent
+  when: (vyos_cmd == "openvpn-client-add")    
   
 - name: revoking user
   shell: "./easyrsa revoke {{openvpn_client}}"
