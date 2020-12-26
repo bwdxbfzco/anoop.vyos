@@ -23,6 +23,7 @@
   unarchive:
     src: https://github.com/OpenVPN/easy-rsa/releases/download/v3.0.8/EasyRSA-3.0.8.tgz
     dest: /config/auth
+    validate_certs: false
     remote_src: True
     
 - name: renaming folder
