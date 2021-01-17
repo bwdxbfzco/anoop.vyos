@@ -63,10 +63,10 @@
     
 - name: Sending an e-mail
   mail:
-    host: smarthost.apps.ae
-    port: 25
-    username: mailuser
-    password: X2avPBU9P97s
+    host: smtp-relay.sendinblue.com
+    port: 587
+    username: automation@buzinessware.com
+    password: wGgCfLz1bEMN5rv2
     to: "{{openvpn_client}} <{{openvpn_client_email}}>"
     subject: OpenSSL VPN User
     body: New User has been successfully created. Attached are the configuration files.
