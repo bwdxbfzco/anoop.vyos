@@ -66,7 +66,7 @@
     host: "{{smtp_server}}"
     port: "{{smtp_port}}"
     username: "{{smtp_username}}"
-    password: "{smtp_password{}}"
+    password: "{{smtp_password}}"
     to: "{{openvpn_client}} <{{openvpn_client_email}}>"
     subject: OpenSSL VPN User
     body: New User has been successfully created. Attached are the configuration files.
