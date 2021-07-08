@@ -42,24 +42,28 @@
     src: "/config/auth/ovpn/pki/private/{{openvpn_client}}.key" 
     dest: "/tmp/{{openvpn_client}}/"
     remote_src: yes
+  when: (vyos_cmd == "openvpn-client-add")
     
 - name: copy certificate to temp directory
   copy: 
     src: "/config/auth/ovpn/pki/issued/{{openvpn_client}}.crt" 
     dest: "/tmp/{{openvpn_client}}/"
-    remote_src: yes   
+    remote_src: yes
+  when: (vyos_cmd == "openvpn-client-add")   
 
 - name: copy ca certificate to temp directory
   copy: 
     src: "/config/auth/ovpn/pki/ca.crt" 
     dest: "/tmp/{{openvpn_client}}/"
-    remote_src: yes  
+    remote_src: yes
+  when: (vyos_cmd == "openvpn-client-add")
    
 - name: Compress directory 
   archive:
     path: "/tmp/{{openvpn_client}}/"
     dest: "/tmp/{{openvpn_client}}.zip"
     format: zip
+  when: (vyos_cmd == "openvpn-client-add")
     
 - name: Sending an e-mail
   mail:
