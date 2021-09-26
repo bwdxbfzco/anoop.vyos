@@ -51,7 +51,13 @@
 - name: build dh certificate
   shell: ./easyrsa --keysize=1024 gen-dh 
   args: 
-    chdir: /config/auth/ovpn/         
+    chdir: /config/auth/ovpn/   
+
+# build crl certificate
+- name: build crl certificate
+  shell: ./easyrsa gen-crl 
+  args: 
+    chdir: /config/auth/ovpn/            
     
 - name: setfact 
   set_fact:
@@ -63,12 +69,12 @@
   vyos_config:
     lines:
       - set interface openvpn vtun0 mode server
-      - set interfaces openvpn vtun0 replace-default-route
-      - set interface openvpn vtun0 server name-server 1.1.1.1
+      - set interface openvpn vtun0 server push-route {{ vyos_private_network }}
       - set interface openvpn vtun0 server subnet 172.16.20.0/24
       - set interface openvpn vtun0 tls ca-cert-file /config/auth/ovpn/pki/ca.crt
       - set interface openvpn vtun0 tls cert-file /config/auth/ovpn/pki/issued/{{openvpn_host}}.crt
       - set interface openvpn vtun0 tls dh-file /config/auth/ovpn/pki/dh.pem
+      - set interface openvpn vtun0 tls crl-file /config/auth/ovpn/pki/crl.pem
       - set interface openvpn vtun0 tls key-file /config/auth/ovpn/pki/private/{{openvpn_host}}.key
       - set nat source rule 999 outbound-interface eth0
       - set nat source rule 999 protocol all
